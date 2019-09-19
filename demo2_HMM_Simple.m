@@ -1,3 +1,4 @@
+
 %----------------------------
 % CREATE NEURAL ENSEMBLE
 %----------------------------
@@ -9,10 +10,14 @@ file_sim=fullfile(savedir,'results.mat');  % file where simulation results are s
 % option='random'; N=50;
 option='cluster'; N=2;
 [spikes,win]=aux.fun_create_ensemble(file_sim,option,N); 
-% newspikes is a struct array with dimension [ntrials,nunits] and field .spk containing spike times
+% spikes is a struct array with dimension [ntrials,nunits] and field .spk containing spike times
 % windel=trial window
 
 %%
+% Instructions for fitting your own dataset
+% 1) Comment the first cell "create neural ensemble"
+% 2) reformat your data into the 'spikes' structure array with dimension [ntrials,nunits] and field .spk containing spike times as columns array (in seconds)
+% 3) create your own 'win_train' array with dimensions [ntrials, 2], where each row is the [start, end] times for each trial (spike times in 'spikes' must be consistently aligned with 'win_train')
 %-------
 % HMM
 %-------
@@ -21,7 +26,7 @@ option='cluster'; N=2;
 win_train=repmat(win,ntrials,1);
 HmmParam=struct();
 % NUMBER OF HIDDEN STATES
-HmmParam.VarStates=10; % number of hidden states
+HmmParam.VarStates=5; % number of hidden states
 %--------------------
 % HmmParam.AdjustT=0.1; % interval to skip at trial start to avoid canonical choice of 1st state in matlab
 HmmParam.BinSize=0.002;%0.005; % time step of Markov chain
@@ -41,6 +46,21 @@ toc
 hmm_results=hmm.fun_HMM_decoding(spikes,hmm_bestfit,HmmParam,win_train);
 % HMM ADMISSIBLE STATES -> state sequences
 hmm_postfit=hmm.fun_HMM_postfit(spikes,hmm_results,HmmParam,win_train);
+
+% OUTPUT OF HMM FIT
+%
+% Important variables:
+%     hmm_bestfit.tpm: K x K transition probability matrix, where K is the number of hidden states
+%     hmm_bestfit.epm: K x (nunits+1) emission probability matrix, where K is the number of hidden states, the (n+1)-th column represents the probability of silence - you can safely drop it
+%     hmm_bestfit.LLtrain: -2*loglikelihood of the data 
+% 
+%     hmm_results(i_trial).pStates: array of dim [K,time] with posterior probabilities of each state in trial i_trial
+%     hmm_results(i_trial).rates: array of dim [K,nunits] with local estimate of emissions (i.e., firing rates in each state) conditioned on observations in trial i_trial 
+%     hmm_results(i_trial).Logpseq: -2*loglikelihood from local observations in trial i_trial
+%     
+%     hmm_postfit(i_trial).sequence: array of dimension [4,nseq] where columns represent detected states (intervals with prob(state)>0.8), in the order they appear in trial
+%         i_trial, and rows represent state [onset,offset,duration,label].
+
 
 %% PLOTS
 hmmdir=fullfile('data','hmm'); if ~exist(hmmdir,'dir'); mkdir(hmmdir); end
