@@ -19,3 +19,5 @@ You may run 2 different network architectures:
 The tutorial demo2_HMM_simple.m fits a Hidden Markov Model (HMM) with a fixed number of states to the network simulations from the previous scripts. This script is used to familiarize with HMM analyses.
 
 The tutorial demo3_HMM_Full.m performs model selection for the number of HMM states, runs a full HMM fit and plots the results. It can be readily used on ensemble recordings from ephys data.
+
+Scripts are optimized for parallel computation on multi-core machines.
