@@ -3,7 +3,7 @@ function [stimulus_save, params]=fun_stim(params)
 % unpack vars
 p=params.p;
 Stimulus=params.Stimulus;
-events=params.events;
+stimuli=params.stimuli;
 Sim=params.Sim;
 
 % for each event, create external current and  stim properties in .Ext 
@@ -11,7 +11,6 @@ Sim=params.Sim;
 stimulus_save=struct('Ext',[],'Stimulus',[]);
 
 % select stimuli
-stimuli=events;
 temp_Stimulus=struct('input',Stimulus.input);
 indfeat=zeros(1,numel(stimuli));
 for ev=1:numel(stimuli)
@@ -40,7 +39,7 @@ aux.v2struct(params,fieldNames);
 cusumNcE=[0 cumsum(popsize)'];
 Tseq=Sim.t_Start:Sim.dt_step:Sim.t_End; 
 
-if ~isempty(events)
+if ~isempty(stimuli)
     feat=Stimulus.feat;
     nstim=numel(feat); % number of stimuli in current trials
     stim=repmat(struct('profile',[],'ind',[],'interval',[]),1,nstim);

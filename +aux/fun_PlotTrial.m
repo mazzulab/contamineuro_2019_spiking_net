@@ -152,7 +152,7 @@ if plot_stimulus
         % if gaussian stimulus, plot distribution
         % index of gaussian stimuli
         ind_gauss=find(cell2mat(cellfun(@(x)~isempty(strfind(x,'gauss')),{Ext.stim(:).name},'uniformoutput',false)));
-        if any(strcmp(Params.events,'CSgauss'))
+        if any(strcmp(Params.stimuli,'CSgauss'))
             figure(numfig); clf; h=[];  numfig=numfig+1; hold on;
             for i_g=1:numel(ind_gauss)
                 subplot(numel(ind_gauss),1,i_g);
@@ -235,9 +235,9 @@ function PSCPlot(Sim,Ext,iIplot,iEplot,iExtplot,hicutoff,srate,VTh,ind_plot)
     hE=[]; hI=[]; hext=[]; htot=[]; hth=[];
     t_plot=max([Sim.t_End-Sim.plot_length,Sim.t_Start])+dt:dt:Sim.t_End;
     ExcInh={'Exc','Inh'};
-    Legplot={'i_E','i_I','i_{ext}','i_{tot}','V_{th}/\tau'}; hstim=[];
+    Legplot={'i_E','i_I','i_{ext}','i_{tot}','V_{th}/\tau'};
     for j=1:nplot-1
-        subplot(nplot,1,j+1)
+        subplot(nplot,1,j+1);  hstim=[];
         hold on;
         [iISmooth]=aux.eegfilt(iIplot(j,:),srate,0,hicutoff);
         [iESmooth]=aux.eegfilt(iEplot(j,:),srate,0,hicutoff);

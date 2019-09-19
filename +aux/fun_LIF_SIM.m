@@ -9,7 +9,7 @@
 function [all_firings, PlotData]=fun_LIF_SIM(ParamsRun)
 
 
-Theta=ParamsRun.Theta; Sim=ParamsRun.Sim; events=ParamsRun.events;%Stimulus=ParamsRun.Stimulus;
+Theta=ParamsRun.Theta; Sim=ParamsRun.Sim; stimuli=ParamsRun.stimuli;%Stimulus=ParamsRun.Stimulus;
 Ext=ParamsRun.Ext; J=ParamsRun.J; N_e=ParamsRun.N_e; N_i=ParamsRun.N_i; p=ParamsRun.p; He=ParamsRun.He;
 Hi=ParamsRun.Hi; tau_e=ParamsRun.tau_e; tau_i=ParamsRun.tau_i; tausyn_e=ParamsRun.tausyn_e;
 tausyn_i=ParamsRun.tausyn_i; tau_arp=ParamsRun.tau_arp;
@@ -36,7 +36,7 @@ VIreset=Hi*Theta(end);
 %
 % BASELINE EXTERNAL CURRENT
 mu=Ext.Mu; % mu is an (N_e+N_i)-th array
-if ~isempty(events)
+if ~isempty(stimuli)
     stim=Ext.stim;
     nstim=numel(stim); % number of stimuli in current trials
 end
@@ -73,7 +73,7 @@ PlotData=[];
 PlotData.Ne_plot=N_e; % number of exc neuron to plot
 PlotData.Ni_plot=N_i; % number of inh neurons to plot
 ind_plot=[5; N_e+5]; % indices of neurons to plot
-if ~isempty(events)
+if ~isempty(stimuli)
     indcue=find(cellfun(@(x)~isempty(x),strfind({stim(:).name},'CS')));
     if ~isempty(indcue)
         ind_plot(1)=stim(indcue).ind(1);
@@ -106,7 +106,7 @@ for t=1:numel(Tseq)         % siMulation of 1000 ms
     F=syn_evolve(F,fired);    
     % integrate
     muRun=mu;
-    if ~isempty(events)
+    if ~isempty(stimuli)
         for n=1:nstim
             if Tseq(t)>=stim(n).interval(1) && Tseq(t)<=stim(n).interval(2) 
                 if strcmp(stim(n).name,'CSgauss')
