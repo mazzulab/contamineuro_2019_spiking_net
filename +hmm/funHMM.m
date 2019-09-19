@@ -72,11 +72,10 @@ plot(HiddenTotal(BestStateInd),LLtot.m2LL(BestStateInd,1),'o','color','r','marke
 aux.figset(gca,'hidden states',sprintf('%s',METHOD),'',15);
 filename=[DATAIN.filesave '_' METHOD '.pdf'];
 saveas(gcf,filename,'pdf');
-%         if 0
-%             % plot how many skipped spikes in binned sequences
-%             figure(1); clf;
-%             h=SpikesSkippedFun(SkipSpikesSess,gnunits);
-%             filename=[files.hmm_plot '_' an '_' sess 'SkippedSpikes' num2str(HmmParam.BinSize) 'msBin.pdf'];
-%             saveas(gcf,filename,'pdf');
-%         end
-%         end
+if 0
+    % plot how many skipped spikes in binned sequences
+    figure(1); clf;
+    h=SpikesSkippedFun(SkipSpikesSess,gnunits);
+    filename=[files.hmm_plot '_' an '_' sess 'SkippedSpikes' num2str(HmmParam.BinSize) 'msBin.pdf'];
+    saveas(gcf,filename,'pdf');
+end

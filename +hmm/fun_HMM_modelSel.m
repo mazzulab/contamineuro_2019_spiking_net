@@ -14,7 +14,7 @@ aux.v2struct(IN);
 temp_SkipSpikesSess=[];
 HmmParam=struct();
 HmmParam.AdjustT=0.; % interval to skip at trial start to avoid canonical choise of 1st state in matlab
-HmmParam.BinSize=0.005;%0.005; % time step of Markov chain
+HmmParam.BinSize=0.002;%0.005; % time step of Markov chain
 HmmParam.MinDur=0.05;   % min duration of an admissible state (s) in HMM DECODING
 HmmParam.MinP=0.8;      % pstate>MinP for an admissible state in HMM ADMISSIBLE STATES
 HmmParam.NumSteps=10;%    %10 number of fits at fixed parameters to avoid non-convexity
