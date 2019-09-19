@@ -39,27 +39,27 @@ end
 %   standard deviation 0.2*mu_ext.
 % CUSTOM OPTIONS:
 % 1) edit your custom-made stimuli inside aux.create_params. Available options: 'US', 'CSgauss' from L. Mazzucato et al., Nat. Neuro. 2019
-% 2) list which events to run in current trials in the cell array 'events'
-% 3) if events={}, run trial with spontaneous activity only, without any stimulus
+% 2) list which stimuli to run in current trials in the cell array 'stimuli'
+% 3) if stimuli={}, run trial with spontaneous activity only, without any stimulus
 %------------------------
 % NOTE:
 % This demo runs the unexpected (UT) and expected (ET) conditions from L. Mazzucato et al., 2019, depending on the following settings:
-% 1) with condition='UT' you simulate an unexpected trial, with a taste
+% % 1) with condition='UT' you simulate an unexpected trial, with a taste
 % stimulus delivered at t=0s and not anticipatory cue (Fig. 3a right panel in the paper)
 % 2) with condition='ET' you simulate an expected trial, with a taste stimulus
 % delivered at t=0, preceded by an anticipatory cue at t=-0.5s (Fig. 3a left panel in the paper).
 %-----------------
 % SELECT STIMULUS
 %-----------------
-% events={}; % ongoing activity
-% events={'US'}; % stimulus evoked-activity targeting selective clusters
-% events={'CSgauss'}; % anticipatory cue speeds up network dynamics
-events={'US','CSgauss'}; % anticipatory cue preceeds stimulu delivery
-save(paramsfile,'events','-append');
+% stimuli={}; % ongoing activity
+% stimuli={'US'}; % stimulus evoked-activity targeting selective clusters
+% stimuli={'CSgauss'}; % anticipatory cue speeds up network dynamics
+stimuli={'US','CSgauss'}; % anticipatory cue preceeds stimulu delivery
+save(paramsfile,'stimuli','-append');
 savedir=fullfile('data'); if ~exist(savedir,'dir'); mkdir(savedir); end % setup directory for saving HMM data
 
 %% RUN SIMULATION
-ntrials=2; % number of trials
+ntrials=20; % number of trials
 file_sim=fullfile(savedir,'results.mat');  % file where simulation results are saved
 %---------------------------
 % GENERATE SYNAPTIC WEIGHTS
@@ -76,6 +76,7 @@ end
 tic
 firings=cell(1,ntrials); % cell array with all spike times in each trial
 PlotData=cell(1,ntrials); % cell array with data for plotting
+% parfor iTrial=1:ntrials % uncomment this line if you have a multi-core  machine with 4 or more cores
 for iTrial=1:ntrials
     ParamsRun=params;
     ParamsRun.Ext=stimulus_save.Ext;
