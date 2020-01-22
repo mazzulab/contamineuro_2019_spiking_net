@@ -25,7 +25,7 @@ aux.v2struct(OUT);
 % PICK BEST FIT
 BestStateInd=find(StatesSelected==HiddenTotal);
 HmmParam.VarStates=StatesSelected;
-colors=aux.distinguishable_colors(HiddenTotal(BestStateInd));
+colors=aux.distinguishable_colors(max(HiddenTotal(BestStateInd),4));
 % POSTFIT ANALYSIS
 % if XVAL, rerun training and decoding on all data
 % if ~XVAL, pick best fit
