@@ -7,7 +7,7 @@ function [LLtottemp,hmm_all_data,hmm_all_bestfit,temp_SkipSpikesSess]=fun_HMM_BI
 
 LLtottemp=zeros(numel(HmmParam.VarStates),1);
 T=0; % total number of datapoints
-for trial=1:numel(ntrials)
+for trial=1:ntrials
     T=T+size(sequence(trial).data,2);
 end
 %---------
