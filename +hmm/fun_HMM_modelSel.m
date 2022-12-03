@@ -28,13 +28,13 @@ switch METHOD
         HiddenMin=4;
         HiddenMax=50; % max value allowed
     case 'BIC'
-        NP=@(NumStates,gnunits,logT)(NumStates.*(NumStates-1)+NumStates.*gnunits)*logT;
+        NP=@(NumStates,gnunits,logT)(NumStates.*(NumStates-1)+NumStates.*gnunits+NumStates-1)*logT;
         fprintf('\n BIC...\n');
         HiddenStep=1; % increment in hidden states% RUNNING EACH SESSION SEPARATELY
         HiddenMin=2;
         HiddenMax=50; % max value allowed
     case 'AIC'
-        NP=@(NumStates,gnunits,logT)(NumStates.*(NumStates-1)+NumStates.*gnunits)*2;
+        NP=@(NumStates,gnunits,logT)(NumStates.*(NumStates-1)+NumStates.*gnunits+NumStates-1)*2;
         fprintf('\n AIC...\n');
         HiddenStep=1; % increment in hidden states% RUNNING EACH SESSION SEPARATELY
         HiddenMin=2;
