@@ -63,12 +63,12 @@ parfor ix=1:NumIter
             oldLL=0;
             oldGuessE=tmp(ix).emisguess;
             oldGuessTR=tmp(ix).trguess;               
-            [tmp(ix).esttr,tmp(ix).estemis,tmp(ix).logliks]=hmmtrain(seq,tmp(ix).trguess,tmp(ix).emisguess,'Maxiterations',1);
+            [tmp(ix).esttr,tmp(ix).estemis,tmp(ix).logliks]=hmm.hmmtrain(seq,tmp(ix).trguess,tmp(ix).emisguess,'Maxiterations',1);
         elseif it_cnt>1
             oldLL=tmp(ix).logliks;
             oldGuessE=tmp(ix).estemis;
             oldGuessTR=tmp(ix).esttr;
-            [tmp(ix).esttr,tmp(ix).estemis,tmp(ix).logliks]=hmmtrain(seq,tmp(ix).esttr,tmp(ix).estemis,'Maxiterations',1);
+            [tmp(ix).esttr,tmp(ix).estemis,tmp(ix).logliks]=hmm.hmmtrain(seq,tmp(ix).esttr,tmp(ix).estemis,'Maxiterations',1);
         end
         % ITERATE BaumWelch until variation of LL, E,
         % TR is all less than tol or it_cnt>NumRuns
